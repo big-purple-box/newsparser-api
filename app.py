@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import cherrypy
+import cherrypy_cors
 import json
 import os
 import requests
@@ -7,6 +8,8 @@ import requests
 from urllib.parse import urlparse, urlencode
 from newsplease import NewsPlease
 
+
+cherrypy_cors.install()
 
 class DatetimeEncoder(json.JSONEncoder):
     def default(self, obj):
@@ -34,6 +37,7 @@ config = {
     'global': {
         'server.socket_host': '0.0.0.0',
         'server.socket_port': int(os.environ.get('PORT', 5000)),
+        'cors.expose.on': True,
     },
     '/assets': {
         'tools.staticdir.root': os.path.dirname(os.path.abspath(__file__)),
